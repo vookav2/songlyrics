@@ -1,0 +1,13 @@
+dist
+build
+dump
+.vscode
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+config.json
+node_modules
+.bak
