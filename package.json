@@ -1,6 +1,6 @@
 {
 	"name": "songlyrics",
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"description": "Find song lyrics just enter the song title",
 	"keywords": [
 		"lyrics","musixmatch","scrape","songlyrics"

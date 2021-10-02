@@ -4,7 +4,8 @@ import { Lyrics, Source, Request } from '../types'
 const musixmatch: Source = {
 	url: 'https://www.musixmatch.com/search/%s',
 	valid: function (res: string): boolean {
-		return !res.includes('No tracks found')
+		return !res.includes('No tracks found') && 
+		!res.includes('Something′s in the air')
 	},
 	parse: async ($: CheerioAPI, req: Request): Promise<Lyrics> => {
 		const lyricsUrl = `https://www.musixmatch.com${
