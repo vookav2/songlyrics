@@ -1,21 +1,31 @@
-import { request } from './util'
-import { Lyrics, Source } from './types'
+import { request, searchDuckduckgo, spacingLyrics } from './util'
+import { Lyrics, Source, SourceLyrics } from './types'
 import { format } from 'util'
 import cheerio from 'cheerio'
 import sources from './sources/index'
 
 async function songlyrics(title: string): Promise<Lyrics> {
+	title = title.toLowerCase()
+	const f = '%s site:%s'
 	try {
 		for (const source of sources) {
-			const res = await request(format(source.url, title))
-			if (source.valid(res)){
-				const lyrics = await source.parse(cheerio.load(res), request)
-				if (lyrics.lyrics) return lyrics
+			const site = `${source.hostname}${source.path}`
+			const url = await searchDuckduckgo(format(f, title, site))
+			if (url.includes(site.toLowerCase())) {
+				const res = await request(url)
+				let lyrics = source.parse(cheerio.load(res))
+				if (lyrics) {
+					const sourceLyrics: SourceLyrics = {
+						name: source.name,
+						url: `https://${source.hostname}`,
+						link: url,
+					}
+					const result = { lyrics, source: sourceLyrics }
+					return result
+				}
 			}
 		}
-	} catch (err) {
-		console.warn(err)
-	}
+	} catch (err) {}
 	throw new Error('No lyrics found!')
 }
 

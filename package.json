@@ -1,9 +1,12 @@
 {
 	"name": "songlyrics",
-	"version": "2.0.3",
+	"version": "2.2.3",
 	"description": "Find song lyrics just enter the song title",
 	"keywords": [
-		"lyrics","musixmatch","scrape","songlyrics"
+		"lyrics",
+		"musixmatch",
+		"scrape",
+		"songlyrics"
 	],
 	"scripts": {
 		"ts:watch": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
@@ -17,10 +20,13 @@
 	"license": "MIT",
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.10",
-		"got": "^11.8.2"
+		"duck-duck-scrape": "^2.1.5",
+		"got": "^11.8.2",
+		"user-agents": "^1.0.793"
 	},
 	"devDependencies": {
 		"@types/node": "^16.10.2",
+		"@types/user-agents": "^1.0.2",
 		"mocha": "^9.1.2",
 		"prettier": "^2.4.1",
 		"supertest": "^6.1.6",

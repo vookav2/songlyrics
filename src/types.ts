@@ -1,9 +1,10 @@
 import { CheerioAPI } from 'cheerio'
 
 export interface Source {
-	url: string
-	valid: (res: string) => boolean
-	parse: ($: CheerioAPI, req: Request) => Promise<Lyrics>
+	name: string
+	hostname: string
+	path: string
+	parse: ($: CheerioAPI) => string
 }
 export interface SourceLyrics {
 	name: string

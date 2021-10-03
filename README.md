@@ -1,4 +1,5 @@
 # songlyrics
+
 Search song lyrics. It scrape the lyrics from musixmatch and others.
 
 <p>
@@ -23,12 +24,13 @@ yarn add songlyrics
 ```
 
 ## How to Use
+
 ```js
 const songlyrics = require('songlyrics').default
 
 songlyrics('breezeblocks')
-  .then((lyrics) => console.log(lyrics))
-  .catch(console.warn)
+	.then((lyrics) => console.log(lyrics))
+	.catch(console.warn)
 
 // {
 //   lyrics: 'She may contain the urge to run away....',
@@ -41,5 +43,7 @@ songlyrics('breezeblocks')
 ```
 
 ## Lyrics provided by
+
 - [Musixmatch](https://www.musixmatch.com)
 - [IndoLirik](https://indolirik.jspinyin.net)
+- Mores

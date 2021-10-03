@@ -1,36 +1,21 @@
 import { CheerioAPI } from 'cheerio'
-import { Lyrics, Source, Request } from '../types'
+import { Source } from '../types'
+import { saveDumpFile } from '../util'
 
 const musixmatch: Source = {
-	url: 'https://www.musixmatch.com/search/%s',
-	valid: function (res: string): boolean {
-		return !res.includes('No tracks found') && 
-		!res.includes('Something′s in the air')
-	},
-	parse: async ($: CheerioAPI, req: Request): Promise<Lyrics> => {
-		const lyricsUrl = `https://www.musixmatch.com${
-			$('a.title').attr('href') as string
-		}`
-		return req(lyricsUrl)
-			.then((html) => $.load(html))
-			.then(($) => {
-				const lyrics: string[] = []
-				$('body span.lyrics__content__ok').each((i, el) => {
-					lyrics.push($(el).text().trim())
-				})
-				if (!lyrics.length) throw new Error('No lyrics found!')
-				return lyrics.join('\n')
-			})
-			.then((lyrics) => {
-				return {
-					lyrics: lyrics,
-					source: {
-						name: 'Musixmatch',
-						url: 'https://www.musixmatch.com',
-						link: lyricsUrl,
-					},
-				}
-			})
+	name: 'Musixmatch',
+	hostname: 'www.musixmatch.com',
+	path: '/lyrics',
+	parse: function ($: CheerioAPI): string {
+		const content = $('body > script:nth(0)').html()
+		if (!content) throw new Error('No content')
+		const selector = 'var __mxmState = '
+		const startIndex = content.indexOf(selector) + selector.length
+		const raw = content.slice(startIndex).slice(0, -1)
+		const json = JSON.parse(raw)
+		if (!json?.page?.lyrics?.lyrics) throw new Error('No content')
+		const lyrics = json.page.lyrics.lyrics
+		return lyrics.body
 	},
 }
 

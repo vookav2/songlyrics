@@ -1,8 +1,8 @@
 const songlyrics = require('./build').default
 
 songlyrics('breezeblocks')
-  .then((lyrics) => console.log(lyrics))
-  .catch(console.warn)
+	.then((lyrics) => console.log(lyrics))
+	.catch(console.warn)
 
 // {
 //   lyrics: 'She may contain the urge to run away....',
