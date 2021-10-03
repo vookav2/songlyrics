@@ -20,7 +20,7 @@ async function songlyrics(title: string): Promise<Lyrics> {
 						url: `https://${source.hostname}`,
 						link: url,
 					}
-					const result = { lyrics, source: sourceLyrics }
+					const result = { lyrics: spacingLyrics(lyrics), source: sourceLyrics }
 					return result
 				}
 			}
