@@ -1,33 +1,58 @@
-import { request, searchDuckduckgo, spacingLyrics } from './util'
-import { Lyrics, Source, SourceLyrics } from './types'
-import { format } from 'util'
-import cheerio from 'cheerio'
-import sources from './sources/index'
+/* eslint-disable no-await-in-loop */
+/* eslint-disable complexity */
 
-async function songlyrics(title: string): Promise<Lyrics> {
-	title = title.toLowerCase()
-	const f = '%s site:%s'
-	try {
-		for (const source of sources) {
-			const site = `${source.hostname}${source.path}`
-			const url = await searchDuckduckgo(format(f, title, site))
-			if (url.includes(site.toLowerCase())) {
-				const res = await request(url)
-				let lyrics = source.parse(cheerio.load(res))
-				if (lyrics) {
-					const sourceLyrics: SourceLyrics = {
-						name: source.name,
-						url: `https://${source.hostname}`,
-						link: url,
-					}
-					const result = { lyrics: spacingLyrics(lyrics), source: sourceLyrics }
-					return result
-				}
-			}
-		}
-	} catch (err) {}
-	throw new Error('No lyrics found!')
+import { request, webSearch } from './lib'
+
+import { format } from 'util'
+import sources from './sources'
+
+const cleanTitleRegexp = /\s(-.+|\[.+\]|\(.+\))/g
+const cleanTitle = (title: string) => title.replace(cleanTitleRegexp, '').trim()
+const lyricsNotFound = () => {
+  throw new Error('No lyrics found!')
 }
 
-export { Lyrics }
+export type TLyrics = {
+  lyrics: string
+  source: {
+    name: string
+    url: string
+    link: string
+  }
+}
+
+const songlyrics = async (title: string): Promise<TLyrics | undefined> => {
+  const queryFormat = '%s site:%s'
+  const cleanedTitle = cleanTitle(title).toLowerCase()
+  const query = (sourceUrl: string) =>
+    format(queryFormat, cleanedTitle, sourceUrl)
+
+  for (const source of sources) {
+    const sourceUrl = `${source.hostname}${source.path}`
+    const { noResults, results } = await webSearch(query(sourceUrl))
+    if (noResults) {
+      lyricsNotFound()
+    }
+
+    const [result] = results
+    if (result.hostname !== source.hostname || !result.url) {
+      lyricsNotFound()
+    }
+
+    const response = await request(result.url)
+    const lyrics = await source.parse(response.body)
+
+    return {
+      lyrics: lyrics,
+      source: {
+        name: result.title.replace(/\s(\|.+)/g, ''),
+        url: `https://${result.hostname}`,
+        link: result.url,
+      },
+    }
+  }
+
+  lyricsNotFound()
+}
+
 export default songlyrics
