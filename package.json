@@ -1,6 +1,6 @@
 {
   "name": "songlyrics",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Find a lyrics just enter the song title",
   "keywords": [
     "lyrics",
@@ -13,11 +13,17 @@
     "build": "rimraf ./build && tsc",
     "pretty": "prettier --write .",
     "lint": "eslint . --ext .ts",
-    "prepare": "husky install"
+    "prepare": "husky install && yarn build"
   },
-  "main": "build/index.js",
-  "typings": "build/index.d.ts",
-  "repository": "git@github.com:vookav2/songlyrics.git",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "/build"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vookav2/songlyrics"
+  },
   "author": "mr687 <davinomoehdanino@gmail.com>",
   "license": "MIT",
   "dependencies": {

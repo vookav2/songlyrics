@@ -2,15 +2,15 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
+    "lib": ["es6", "dom"],
     "moduleResolution": "Node",
     "declaration": true,
     "outDir": "./build",
+    "declarationDir": "./build",
     "esModuleInterop": true,
     "strict": true,
-    "alwaysStrict": true,
-    "skipLibCheck": true,
-    "noImplicitAny": true
+    "skipLibCheck": true
   },
   "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "build"]
 }

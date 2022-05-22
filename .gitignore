@@ -17,6 +17,7 @@ dump
 _.*
 *.pem
 .bak
+*.tgz
 
 # yarn caches
 .yarn/*
