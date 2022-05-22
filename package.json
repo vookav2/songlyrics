@@ -10,7 +10,6 @@
   "scripts": {
     "ts:watch": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
     "ts:build": "rimraf ./build && tsc",
-    "example": "node ./example.js",
     "pretty": "prettier --write .",
     "lint": "eslint . --ext .ts",
     "prepare": "husky install"
