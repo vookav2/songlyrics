@@ -1,13 +1,41 @@
-dist
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+__tests__
+
+# production
 build
+dist
 dump
-.vscode
+
+# misc
+.DS_Store
+_.*
+*.pem
+.bak
+
+# yarn caches
 .yarn/*
 !.yarn/cache
 !.yarn/releases
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env*.local
+.env
 config.json
-node_modules
-.bak
+
+# typescript
+tsconfig.tsbuildinfo
