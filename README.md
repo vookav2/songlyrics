@@ -1,6 +1,6 @@
 # songlyrics
 
-Search song lyrics. It scrape the lyrics from musixmatch and others.
+Search a lyrics. It scrapes the lyrics from unofficial sources.
 
 <p>
   <a href="https://www.npmjs.com/package/songlyrics">
@@ -26,24 +26,24 @@ yarn add songlyrics
 ## How to Use
 
 ```js
-const songlyrics = require('songlyrics').default
+const songlyrics = require('songlyrics')
 
 songlyrics('breezeblocks')
-	.then((lyrics) => console.log(lyrics))
-	.catch(console.warn)
+  .then(lyrics => console.log(lyrics))
+  .catch(console.warn)
 
 // {
 //   lyrics: 'She may contain the urge to run away....',
 //   source: {
-//     name: 'Musixmatch',
-//     url: 'https://www.musixmatch.com',
-//     link: 'https://www.musixmatch.com/lyrics/alt-J-6/Breezeblocks-2'
+//     name: '...',
+//     url: 'https://...',
+//     link: 'https://...'
 //   }
 // }
 ```
 
-## Lyrics provided by
+## The Lyrics provided by following unofficial sources
 
 - [Musixmatch](https://www.musixmatch.com)
-- [IndoLirik](https://indolirik.jspinyin.net)
-- Mores
+- [AZLyrics](https://www.azlyrics.com)
+- [Lyrics](https://www.lyrics.com)
