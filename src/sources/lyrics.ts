@@ -1,13 +1,16 @@
-import { CheerioAPI } from 'cheerio'
-import { Source } from '../types'
+import { TSource, useSpacingLyrics } from '.'
 
-const lyrics: Source = {
-	name: 'Lyrics',
-	hostname: 'www.lyrics.com',
-	path: '/lyric',
-	parse: function ($: CheerioAPI): string {
-		return $('pre#lyric-body-text').text().trim()
-	},
+import { load } from 'cheerio'
+
+const lyrics: TSource = {
+  name: 'Lyrics',
+  hostname: 'www.lyrics.com',
+  path: '/lyric',
+  parse: (html: string): Promise<string> => {
+    const $ = load(html)
+    const parseText = $('pre#lyric-body-text').text().trim()
+    return Promise.resolve(useSpacingLyrics(parseText))
+  },
 }
 
 export default lyrics

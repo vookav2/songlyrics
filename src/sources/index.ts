@@ -1,20 +1,32 @@
-import { Source } from '../types'
-import musixmatch from './musixmatch'
-import indolirik from './indolirik'
 import azlyrics from './azlyrics'
-import genius from './genius'
 import lyrics from './lyrics'
-import songlyrics from './songlyrics'
-import liriklaguindonesia from './liriklaguindonesia'
+import musixmatch from './musixmatch'
 
-const sources: Source[] = [
-	musixmatch,
-	azlyrics,
-	liriklaguindonesia,
-	genius,
-	indolirik,
-	songlyrics,
-	lyrics,
-]
+const chunkArray = <T>(arr: T[], size: number): T[][] => {
+  const chunk: T[][] = []
+  let i = 0
+  while (i < arr.length) {
+    chunk.push(arr.slice(i, (i += size)))
+  }
+  return chunk
+}
+
+export const useSpacingLyrics = (lyrics: string): string => {
+  if (lyrics.includes('\n\n')) {
+    return lyrics
+  }
+  const splitLyrics = lyrics.split('\n')
+  const chunkLyrics = chunkArray(splitLyrics, 4)
+  return chunkLyrics.map(x => x.join('\n')).join('\n\n')
+}
+
+export type TSource = {
+  name: string
+  hostname: string
+  path: string
+  parse: (html: string) => Promise<string>
+}
+
+const sources: TSource[] = [musixmatch, azlyrics, lyrics]
 
 export default sources
