@@ -1,0 +1,60 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts"]
+      }
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-nested-ternary": "off",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "semi": ["error", "never"],
+    "curly": ["error", "all"],
+    "no-console": "error",
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "eqeqeq": ["error", "always"],
+    "no-await-in-loop": "error",
+    "array-callback-return": "error",
+    "no-compare-neg-zero": "error",
+    "no-dupe-else-if": "error",
+    "no-dupe-keys": "error",
+    "no-duplicate-imports": "error",
+    "sort-imports": "error",
+    "no-unused-expressions": "error",
+    "no-unused-labels": "error",
+    "no-unused-vars": "off",
+    "no-use-before-define": "error",
+    "no-unsafe-finally": "error",
+    "no-unexpected-multiline": "error",
+    "no-unreachable": "error",
+    "no-undef": "off",
+    "accessor-pairs": "error",
+    "arrow-body-style": "error",
+    "complexity": ["error", 4],
+    "consistent-return": "off",
+    "consistent-this": ["error", "self"],
+    "comma-dangle": ["error", "always-multiline"],
+    "no-trailing-spaces": "error",
+    "prettier/prettier": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ]
+  }
+}
