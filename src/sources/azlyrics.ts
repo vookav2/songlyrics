@@ -1,20 +1,11 @@
-import { TSource, useSpacingLyrics } from '.'
+import { HTMLElement } from 'node-html-parser'
 
-import { load } from 'cheerio'
-
-const azlyrics: TSource = {
+export const azlyrics = {
   name: 'AZLyrics',
-  hostname: 'www.azlyrics.com',
-  path: '/lyrics',
-  parse: (html: string): Promise<string> => {
-    const $ = load(html)
-
-    const content = $('div.main-page div div.col-xs-12 > div:nth(4)')
-      .text()
-      .trim()
-
-    return Promise.resolve(useSpacingLyrics(content))
+  parse: (html: HTMLElement): Promise<string> => {
+    const content = html
+      .querySelector('div.ringtone')
+      ?.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent.trim()
+    return Promise.resolve(`${content}`)
   },
 }
-
-export default azlyrics

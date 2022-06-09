@@ -1,6 +1,6 @@
 {
   "name": "songlyrics",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "Find a lyrics just enter the song title",
   "keywords": [
     "lyrics",
@@ -8,12 +8,11 @@
     "unofficial"
   ],
   "scripts": {
-    "ts:watch": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
-    "ts:build": "rimraf ./build && tsc",
+    "dev": "ts-node-dev --respawn --cls --transpile-only --poll ./src/index.ts",
     "build": "rimraf ./build && tsc",
     "pretty": "prettier --write .",
     "lint": "eslint . --ext .ts",
-    "prepare": "husky install && yarn build"
+    "prepare": "husky install"
   },
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -27,10 +26,7 @@
   "author": "mr687 <davinomoehdanino@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.11",
-    "duck-duck-scrape": "^2.2.1",
-    "got": "^11.8.2",
-    "user-agents": "^1.0.793"
+    "node-html-parser": "^5.3.3"
   },
   "devDependencies": {
     "@types/node": "^16.10.2",
