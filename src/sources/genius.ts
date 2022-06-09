@@ -1,12 +1,15 @@
 import { HTMLElement } from 'node-html-parser'
 
-export const musixmatch = {
-  name: 'Musixmatch',
+export const genius = {
+  name: 'Genius',
   parse: (html: HTMLElement): Promise<string> => {
     const content = html
-      .querySelectorAll('p.mxm-lyrics__content')
-      .map(x => x.textContent)
+      .querySelectorAll('div[data-lyrics-container=true]')
+      .map(x => x.structuredText)
       .join('')
+      .replace(/\[.+\]/g, '')
+      .trim()
+
     return Promise.resolve(content)
   },
 }

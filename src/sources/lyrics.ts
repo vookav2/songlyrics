@@ -1,16 +1,13 @@
-import { TSource, useSpacingLyrics } from '.'
+import { HTMLElement } from 'node-html-parser'
 
-import { load } from 'cheerio'
-
-const lyrics: TSource = {
+export const lyrics = {
   name: 'Lyrics',
   hostname: 'www.lyrics.com',
   path: '/lyric',
-  parse: (html: string): Promise<string> => {
-    const $ = load(html)
-    const parseText = $('pre#lyric-body-text').text().trim()
-    return Promise.resolve(useSpacingLyrics(parseText))
+  parse: (html: HTMLElement): Promise<string> => {
+    const content = html
+      .querySelector('pre#lyric-body-text')
+      ?.textContent.replace(/(<a.*">|<\/a>)/g, '')
+    return Promise.resolve(`${content}`)
   },
 }
-
-export default lyrics
