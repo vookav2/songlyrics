@@ -1,4 +1,5 @@
 <!-- URLs  -->
+
 [repo]: https://github.com/vookav2/songlyrics
 [issues]: https://github.com/vookav2/songlyrics/issues
 [nodejs]: https://nodejs.org/
@@ -126,6 +127,5 @@ Should you have any questions or concerns please contact me directly via [email]
 ## License
 
 Distributed under the [MIT](https://github.com/vookav2/searchmusic/blob/main/LICENSE) License.
-  
-([⬆ back to top](#songlyrics))
 
+([⬆ back to top](#songlyrics))
