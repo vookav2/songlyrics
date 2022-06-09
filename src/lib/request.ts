@@ -1,16 +1,26 @@
-import got, { OptionsOfTextResponseBody } from 'got'
+import { RequestOptions, request } from 'https'
 
-export const makeHttpRequest = ({
-  randomUserAgent,
-}: {
-  randomUserAgent: () => string
-}) => {
-  const request = (url: string, options?: OptionsOfTextResponseBody) =>
-    got(url, {
-      headers: {
-        'User-Agent': randomUserAgent(),
-      },
-      ...options,
+export const makeRequest = (url: URL, method = 'GET') => {
+  const options: RequestOptions = {
+    hostname: url.hostname,
+    port: url.protocol.startsWith('https') ? 443 : 80,
+    path: `${url.pathname}${url.search}`,
+    method: method,
+  }
+  return new Promise<string>((resolve, reject) => {
+    const req = request(options, res => {
+      if (res.statusCode && (res.statusCode < 200 || res.statusCode > 299)) {
+        return reject(
+          new Error(`Failed to get the response: ${res.statusCode}`),
+        )
+      }
+      const data: any[] = []
+      res.on('data', chunk => {
+        data.push(chunk)
+      })
+      res.on('end', () => resolve(Buffer.concat(data).toString('utf8')))
     })
-  return request
+    req.on('error', reject)
+    req.end()
+  })
 }
