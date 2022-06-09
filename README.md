@@ -126,6 +126,6 @@ Should you have any questions or concerns please contact me directly via [email]
 
 ## License
 
-Distributed under the [MIT](https://github.com/vookav2/searchmusic/blob/main/LICENSE) License.
+Distributed under the [MIT](https://github.com/vookav2/songlyrics/blob/main/LICENSE) License.
 
 ([⬆ back to top](#songlyrics))
