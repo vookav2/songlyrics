@@ -8,12 +8,11 @@
     "unofficial"
   ],
   "scripts": {
-    "ts:watch": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
-    "ts:build": "rimraf ./build && tsc",
+    "dev": "ts-node-dev --respawn --cls --transpile-only --poll ./src/index.ts",
     "build": "rimraf ./build && tsc",
     "pretty": "prettier --write .",
     "lint": "eslint . --ext .ts",
-    "prepare": "husky install && yarn build"
+    "prepare": "husky install"
   },
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
