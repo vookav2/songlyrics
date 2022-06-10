@@ -6,6 +6,7 @@ import { makeSources } from '../sources'
 const cleanTitleRegexp = /\s(-.+|\[.+\]|\(.+\))/g
 const cleanTitle = (title: string) => title.replace(cleanTitleRegexp, '').trim()
 export type TLyrics = {
+  title: string
   lyrics: string
   source: {
     name: string
@@ -29,9 +30,10 @@ export const songlyrics = async (
     const html = await makeRequest(new URL(ddgResult.c))
     const lyrics = await source.parse(htmlParser(html))
     return {
+      title: ddgResult.t.replace(/\|.+/g, '').trim(),
       lyrics,
       source: {
-        name: ddgResult.t.replace(/\|.+/g, '').trim(),
+        name: source.name,
         url: ddgResult.i,
         link: ddgResult.c,
       },
