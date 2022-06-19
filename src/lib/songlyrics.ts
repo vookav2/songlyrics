@@ -18,7 +18,7 @@ export const songlyrics = async (
   title: string,
 ): Promise<TLyrics | undefined> => {
   const clean = cleanTitle(title).toLowerCase()
-  const query = `${clean} intitle:lyrics`
+  const query = `${clean} inurl:lyrics`
   const ddgResults = await webSearch(query)
   const ddgResult = ddgResults?.shift()
   const sourceName = ddgResult?.i.replace(/(www.|.com)/g, '').toLowerCase()
