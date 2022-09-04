@@ -1,4 +1,6 @@
-import { RequestOptions, request } from 'https'
+import { https } from 'follow-redirects'
+const { request } = https;
+import { RequestOptions } from 'https';
 
 export const makeRequest = (url: URL, method = 'GET') => {
   const options: RequestOptions = {
