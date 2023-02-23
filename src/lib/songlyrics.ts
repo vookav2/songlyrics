@@ -20,23 +20,33 @@ export const songlyrics = async (
   const clean = cleanTitle(title).toLowerCase()
   const query = `${clean} inurl:lyrics`
   const ddgResults = await webSearch(query)
-  const ddgResult = ddgResults?.shift()
-  const sourceName = ddgResult?.i.replace(/(www.|.com)/g, '').toLowerCase()
-
   const sources = makeSources()
-  if (ddgResult && sourceName && sources.has(sourceName)) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const source = sources.get(sourceName)!
-    const html = await makeRequest(new URL(ddgResult.c))
-    const lyrics = await source.parse(htmlParser(html))
-    return {
-      title: ddgResult.t.replace(/\|.+/g, '').trim(),
-      lyrics,
-      source: {
-        name: source.name,
-        url: ddgResult.i,
-        link: ddgResult.c,
-      },
+  const possibleSites =
+    ddgResults
+      ?.map(r => {
+        r.i = r.i?.replace(/(www\.)?(.*)\.\w+$/g, '$2').toLowerCase()
+        return r
+      })
+      .filter(r => [...sources.keys()].includes(r.i)) || []
+  for (const site of possibleSites) {
+    const siteName = site?.i
+    if (siteName) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const source = sources.get(siteName)!
+      const html = await makeRequest(new URL(site.c))
+      const lyrics = await source.parse(htmlParser(html))
+      if (!lyrics) {
+        continue
+      }
+      return {
+        title: site.t.replace(/\|.+/g, '').trim(),
+        lyrics,
+        source: {
+          name: source.name,
+          url: site.i,
+          link: site.c,
+        },
+      }
     }
   }
   return
