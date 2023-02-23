@@ -1,6 +1,6 @@
 import { makeRequest } from './request'
 
-const VQD_REGEX = /vqd='(\d+-\d+-\d+)'/
+const VQD_REGEX = /vqd='([\d-]+)';/
 const SEARCH_REGEX =
   /DDG\.pageLayout\.load\('d',(\[.+\])\);DDG\.duckbar\.load\('images'/
 
@@ -8,18 +8,14 @@ const queryString = (query: Record<string, string>) =>
   new URLSearchParams(query).toString()
 
 const getVQD = async (query: string) => {
-  try {
-    const vqdRequestUrl = new URL(
-      `https://duckduckgo.com/?${queryString({
-        q: query,
-        ia: 'web',
-      })}`,
-    )
-    const html = await makeRequest(vqdRequestUrl)
-    return VQD_REGEX.exec(html)?.at(1)
-  } catch (err) {
-    throw new Error(`Failed to get the VQD for query "${query}".`)
-  }
+  const vqdRequestUrl = new URL(
+    `https://duckduckgo.com/?${queryString({
+      q: query,
+      ia: 'web',
+    })}`,
+  )
+  const html = await makeRequest(vqdRequestUrl)
+  return VQD_REGEX.exec(html)?.at(1)
 }
 
 // eslint-disable-next-line complexity
@@ -55,7 +51,7 @@ export const webSearch = async (
   if (/DDG.deep.is506/.test(responseString)) {
     throw new Error('A server error occurred!')
   }
-  const raw = SEARCH_REGEX.exec(responseString)?.at(1)?.replace(/\t/g, '    ')
+  const raw = SEARCH_REGEX.exec(responseString)?.at(1)?.replace(/\\t/g, ' ')
   if (!raw) {
     throw new Error('No results found!')
   }
